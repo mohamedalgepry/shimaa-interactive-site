@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b0912">
+  <meta name="theme-color" content="#f4f1eb">
   <meta name="description" content="صفحة تفاعلية خاصة بشيماء، فيها أسئلة وذكريات عن الصحوبية والهزار والرغي والمواقف اللي بينا.">
   <title>لشيماء بس — حكاياتنا</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=20261022">
 </head>
 <body>
 <div class="noise"></div>
@@ -82,6 +82,6 @@
     </div>
   </section>
 </main>
-<script src="assets/app.js"></script>
+<script src="assets/app.js?v=20261022"></script>
 </body>
 </html>
