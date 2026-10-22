@@ -1,8 +1,11 @@
 const $ = (s) => document.querySelector(s);
 const screens = document.querySelectorAll('.screen');
+const progressBar = $('.bar');
+
 const show = (id) => {
   screens.forEach((x) => x.classList.remove('active'));
-  $('#' + id).classList.add('active');
+  const target = $('#' + id);
+  if (target) target.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
@@ -44,16 +47,18 @@ const memories = [
 ];
 
 let i = 0;
+let saving = false;
 const answers = [];
 
 function render() {
   const q = questions[i];
+  const percent = Math.round(((i + 1) / questions.length) * 100);
   $('#count').textContent = `${String(i + 1).padStart(2, '0')} / ${questions.length}`;
   $('#qnum').textContent = `السؤال ${String(i + 1).padStart(2, '0')}`;
   $('#question').textContent = q[0];
-  const percent = Math.round((i / questions.length) * 100);
   $('#progress').style.width = `${percent}%`;
   $('#progressText').textContent = `${percent}%`;
+  progressBar?.setAttribute('aria-valuenow', String(percent));
   $('#options').innerHTML = '';
   $('#custom').classList.toggle('hidden', !q[2]);
   $('#customAnswer').value = '';
@@ -73,24 +78,25 @@ function render() {
 }
 
 function answer(value) {
+  if (answers.length !== i) return;
   answers.push({ question: questions[i][0], answer: value });
   next();
 }
 
 function next() {
   i += 1;
-  if (i < questions.length) {
-    render();
-  } else {
-    finish();
-  }
+  if (i < questions.length) render();
+  else finish();
 }
 
 $('#start').addEventListener('click', () => {
-  if ($('#name').value.trim() !== 'شيماء') {
+  const name = $('#name').value.trim();
+  if (name !== 'شيماء') {
     $('#hint').textContent = 'استني... إحنا عارفين إن شيماء هي اللي المفروض تدخل.';
+    $('#name').focus();
     return;
   }
+  $('#hint').textContent = '';
   show('quiz');
   render();
 });
@@ -108,22 +114,38 @@ $('#customNext').addEventListener('click', () => {
   answer(value);
 });
 
-function finish() {
-  fetch('api/save.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: 'شيماء', answers })
-  }).catch(() => {});
+async function finish() {
+  if (saving) return;
+  saving = true;
+  const status = $('#saveStatus');
   show('finish');
+  status.textContent = 'بنحفظ إجاباتك...';
+
+  try {
+    const response = await fetch('api/save.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name: 'شيماء', answers })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error('save_failed');
+    status.textContent = 'الإجابات اتحفظت بنجاح.';
+    status.classList.add('success');
+  } catch {
+    status.textContent = 'حصلت مشكلة بسيطة في الحفظ، لكن تقدري تكملي الصفحة عادي.';
+    status.classList.add('error');
+  }
 }
 
 $('#reveal').addEventListener('click', () => {
   show('special');
-  $('#memories').innerHTML = memories.map((m, n) => `
-    <article class="card memory" style="animation-delay:${n * 90}ms">
-      <small>${m[0]}</small>
-      <h3>${m[1]}</h3>
-      <p>${m[2]}</p>
-    </article>
-  `).join('');
+  if (!$('#memories').children.length) {
+    $('#memories').innerHTML = memories.map((m, n) => `
+      <article class="card memory" style="animation-delay:${n * 90}ms">
+        <small>${m[0]}</small>
+        <h3>${m[1]}</h3>
+        <p>${m[2]}</p>
+      </article>
+    `).join('');
+  }
 });
