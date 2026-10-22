@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b0912">
-  <meta name="description" content="صفحة صغيرة معمولة لشيماء، أقرب واحدة وصاحبة كل الهزار والرغي.">
+  <meta name="description" content="صفحة تفاعلية خاصة بشيماء، فيها أسئلة وذكريات عن الصحوبية والهزار والرغي والمواقف اللي بينا.">
   <title>لشيماء بس — حكاياتنا</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
         <h1>جاهزة نفتكر<br><em>الحاجات اللي بينا؟</em></h1>
         <p>كام سؤال عن الرغي والهزار والخروجات والمواقف اللي محدش غيرنا يفهمها بنفس الطريقة.</p>
         <label class="field-label" for="name">مين إنتِ؟</label>
-        <input id="name" autocomplete="off" placeholder="اكتبي اسمك هنا" aria-label="اسمك">
+        <input id="name" autocomplete="off" maxlength="30" placeholder="اكتبي اسمك هنا" aria-label="اسمك">
         <button id="start" type="button">ندخل؟ <span>←</span></button>
         <small id="hint" role="alert"></small>
       </div>
@@ -38,13 +38,13 @@
         <div><span class="eyebrow">شيماء × محمد</span><strong>أسئلة من اللي بينا</strong></div>
         <span id="count"></span>
       </header>
-      <div class="progress-wrap"><div class="bar"><i id="progress"></i></div><span id="progressText">0%</span></div>
+      <div class="progress-wrap"><div class="bar" role="progressbar" aria-label="تقدم الأسئلة" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="progress"></i></div><span id="progressText">0%</span></div>
       <div class="card qcard">
         <span class="eyebrow" id="qnum"></span>
         <h2 id="question"></h2>
         <div id="options" class="options"></div>
         <div id="custom" class="custom hidden">
-          <textarea id="customAnswer" maxlength="500" placeholder="اكتبيها بطريقتك... مفيش إجابة نموذجية هنا"></textarea>
+          <textarea id="customAnswer" maxlength="500" placeholder="اكتبيها بطريقتك... مفيش إجابة نموذجية هنا" aria-label="الإجابة المفتوحة"></textarea>
           <button id="customNext" type="button">ثبتي الإجابة <span>←</span></button>
         </div>
         <p id="micro" class="micro"></p>
@@ -59,6 +59,7 @@
       <span class="eyebrow">خلصنا</span>
       <h2>كده عرفنا رأي شيماء</h2>
       <p>بس الأسئلة كانت مجرد الجزء الأول. فيه صفحة تانية معمولة مخصوص للحاجات الحلوة اللي اتجمعت بينا.</p>
+      <p id="saveStatus" class="save-status" aria-live="polite">بنحفظ إجاباتك...</p>
       <button id="reveal" type="button">أفتح الصفحة التانية <span>←</span></button>
     </div>
   </section>
@@ -76,7 +77,7 @@
         <p>زي كمية الرغي اللي ممكن تبدأ من ولا حاجة وتنتهي وإحنا مش عارفين اتكلمنا في إيه. والضحك على حاجات لو حكيناها لحد تاني غالبًا مش هيضحك.</p>
         <p>المهم إن فيه شخص تقدر تبقى معاه على طبيعتك، تحكي له، تهزر معاه، وتبعت له حاجة عشوائية لمجرد إنك عايز تشاركه اللحظة.</p>
         <div class="signature">— محمد</div>
-        <a class="whatsapp" href="https://wa.me/201281755275?text=%D8%B4%D9%8A%D9%85%D8%A7%D8%A1%20%D8%AE%D9%84%D8%B5%D8%AA%20%D8%A7%D9%84%D8%A7%D8%B3%D8%A6%D9%84%20%D9%88%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A7%D8%B9%D8%B1%D9%81%20%D8%A7%D8%AC%D8%A7%D8%A8%D8%A7%D8%AA%D9%83%20%D9%88%D9%86%D9%83%D9%85%D9%84%20%D8%B1%D8%BA%D9%8A%20%E2%9C%A8" target="_blank" rel="noopener">تعالي نكمل الرغي على واتساب ↗</a>
+        <a class="whatsapp" href="https://wa.me/201281755275?text=%D8%B4%D9%8A%D9%85%D8%A7%D8%A1%20%D8%AE%D9%84%D8%B5%D8%AA%20%D8%A7%D9%84%D8%A7%D8%B3%D8%A6%D9%84%20%D9%88%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A7%D8%B9%D8%B1%D9%81%20%D8%A7%D8%AC%D8%A7%D8%A8%D8%A7%D8%AA%D9%83%20%D9%88%D9%86%D9%83%D9%85%D9%84%20%D8%B1%D8%BA%D9%8A%20%E2%9C%A8" target="_blank" rel="noopener noreferrer">تعالي نكمل الرغي على واتساب ↗</a>
       </div>
     </div>
   </section>
